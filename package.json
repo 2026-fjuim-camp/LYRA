@@ -1,0 +1,17 @@
+{
+  "name": "zyra",
+  "description": "The Discord bot used for Discord server management and operation for 2026 FJUIM Camp.",
+  "main": "dist/index.js",
+  "scripts": {
+    "tsgo": "tsgo -b && node .",
+    "tsc": "tsc -b && node .",
+    "check-types": "tsgo --noEmit"
+  },
+  "dependencies": {
+    "discord.js": "^14.25.1",
+    "dotenv": "^17.2.3"
+  },
+  "devDependencies": {
+    "@typescript/native-preview": "^7.0.0-dev.20251230.1"
+  }
+}
