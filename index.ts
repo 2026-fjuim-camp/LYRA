@@ -15,7 +15,7 @@ class Main {
     async main(): Promise<void> {
         // Register ready event
         let event = new EventManager(this.client);
-        await event.register("ready");
+        await event.register("ready.js");
 
         // Login to bot
         await this.login();
