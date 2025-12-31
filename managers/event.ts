@@ -1,8 +1,9 @@
-import { Client, ClientEvents, Events } from 'discord.js';
+import { Client, ClientEvents } from 'discord.js';
 import { readdirSync } from 'fs';
 import { join } from 'path';
 import { Logger } from './logger';
-import { ManagerBase } from '../index';
+import { ManagerBase } from '../bases/manager';
+import { EventBase } from '../bases/event';
 
 export class EventManager implements ManagerBase {
     public static instance: EventManager;
@@ -57,9 +58,4 @@ export class EventManager implements ManagerBase {
             await this.register(file, eventsPath);
         }
     }
-}
-
-export interface EventBase {
-    type: Events;
-    handle(...args: any[]): Promise<void>;
 }

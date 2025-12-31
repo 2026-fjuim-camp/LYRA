@@ -2,7 +2,7 @@ import { Client } from 'discord.js';
 import { readdirSync } from 'fs';
 import { join } from 'path';
 import { Logger } from './logger';
-import { ManagerBase } from '../index';
+import { ManagerBase } from '../bases/manager';
 
 export class InteractionManager implements ManagerBase {
     public static instance: InteractionManager;

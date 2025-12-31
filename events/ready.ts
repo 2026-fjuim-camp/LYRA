@@ -1,4 +1,5 @@
-import { EventBase, EventManager } from '../managers/event';
+import { EventManager } from '../managers/event';
+import { EventBase } from '../bases/event';
 import { Logger } from '../managers/logger';
 import { Client, Events } from 'discord.js';
 import { InteractionManager } from '../managers/interaction';
