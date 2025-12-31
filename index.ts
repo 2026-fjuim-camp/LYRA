@@ -1,17 +1,21 @@
 import 'dotenv/config';
-import { Client, Events, GatewayIntentBits } from 'discord.js';
+import { Client, GatewayIntentBits } from 'discord.js';
 import { EventManager } from './managers/event';
 import { Logger } from './managers/logger';
 
 class Main {
+    public static instance: Main;
     logger: Logger = new Logger("Main");
     client: Client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
+    constructor() {
+        Main.instance = this;
+    }
+
     async main(): Promise<void> {
-        // Register events
+        // Register ready event
         let event = new EventManager(this.client);
-        await event.registerAll();
-        this.logger.log("Successfully registered all events.\n");
+        await event.register("ready");
 
         // Login to bot
         await this.login();
@@ -20,6 +24,15 @@ class Main {
     async login(): Promise<void> {
         this.client.login(process.env.DISCORD_TOKEN);
     }
+}
+
+export interface ManagerBase {
+    client: Client<boolean>;
+    logger: Logger;
+    registered: string[];
+
+    register(file: string, eventsPath?: string): Promise<void>;
+    registerAll(): Promise<void>;
 }
 
 new Main().main();

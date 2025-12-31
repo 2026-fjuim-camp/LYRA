@@ -2,17 +2,24 @@ import { Client, ClientEvents, Events } from 'discord.js';
 import { readdirSync } from 'fs';
 import { join } from 'path';
 import { Logger } from './logger';
+import { ManagerBase } from '../index';
 
-export class EventManager {
-    private client: Client<boolean>;
-    private logger: Logger;
+export class EventManager implements ManagerBase {
+    public static instance: EventManager;
+    client: Client<boolean>;
+    logger: Logger;
+    registered: string[];
 
     constructor(client: Client<boolean>) {
         this.client = client;
         this.logger = new Logger("EventManager");
+        this.registered = [];
+        EventManager.instance = this;
     }
 
     async register(file: string, eventsPath?: string): Promise<void> {
+        if (this.registered.includes(file)) return;
+
         eventsPath = eventsPath ?? join(__dirname, '../events');
 
         try {
@@ -33,6 +40,8 @@ export class EventManager {
                     this.logger.error(`Error handling ${eventInstance.type}:`, error);
                 }
             });
+
+            this.registered.push(file);
 
             this.logger.debug(`Registered event: ${eventInstance.type}`);
         } catch (error) {
