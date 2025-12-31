@@ -1,6 +1,8 @@
 {
   "name": "zyra",
   "description": "The Discord bot used for Discord server management and operation for 2026 FJUIM Camp.",
+  "author": "WatchAndyTW",
+  "license": "MIT",
   "main": "dist/index.js",
   "scripts": {
     "tsgo": "tsgo -b && node .",
