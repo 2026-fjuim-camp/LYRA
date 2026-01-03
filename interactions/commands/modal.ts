@@ -1,5 +1,5 @@
 import { CommandBase } from '../../bases/command';
-import { CacheType, Interaction, RESTPostAPIApplicationCommandsJSONBody, SlashCommandBuilder} from 'discord.js';
+import { CacheType, Interaction, MessageFlags, RESTPostAPIApplicationCommandsJSONBody, SlashCommandBuilder} from 'discord.js';
 import { Logger } from '../../managers/logger';
 import { join } from 'path';
 import { ModalConstructor } from '../../bases/modal';
@@ -9,6 +9,10 @@ export default class ModelCommand extends CommandBase {
 
     public static async handle(interaction: Interaction<CacheType>): Promise<void> {
         if (!interaction.isChatInputCommand()) return;
+        if (interaction.user.id !== process.env.OWNER_ID) {
+            await interaction.reply({ content: "You do not have permission to use this command.", flags: MessageFlags.Ephemeral });
+            return;
+        }
         this.logger.debug(`Received command \`${interaction.commandName}\` from ${interaction.user.tag}`);
 
         // Get the name of the model
@@ -19,7 +23,7 @@ export default class ModelCommand extends CommandBase {
             const ModalClass: ModalConstructor | undefined = modal.default || modal[Object.keys(modal)[0]];
 
             if (!ModalClass) {
-                interaction.reply({ content: `Modal ${name} not found`, ephemeral: true });
+                interaction.reply({ content: `Modal ${name} not found`, flags: MessageFlags.Ephemeral });
                 this.logger.warn(`No export found in ${name}`);
                 return;
             }
@@ -30,7 +34,7 @@ export default class ModelCommand extends CommandBase {
             this.logger.error(`Failed to load modal from ${name}:`, error);
 
             // Response to the interaction
-            interaction.reply({ content: `Modal ${name} not found`, ephemeral: true });
+            interaction.reply({ content: `Modal ${name} not found`, flags: MessageFlags.Ephemeral });
         }
     }
 
