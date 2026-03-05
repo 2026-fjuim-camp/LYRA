@@ -6,6 +6,11 @@ export default class NicknameModal extends ModalBase {
         if (!interaction.isModalSubmit()) return;
 
         const nickname = interaction.fields.getTextInputValue("nickname");
+        if (!/^[a-zA-Z\s]+$/.test(nickname)) {
+            await interaction.reply({ content: "花名只能包含英文字母！", flags: MessageFlags.Ephemeral });
+            return;
+        }
+
         const roles = (interaction.member?.roles as GuildMemberRoleManager)?.cache;
         const roleMap: Record<string, string> = {
             "1423565761384939570": "CCS", // 中央指揮系統
@@ -37,7 +42,6 @@ export default class NicknameModal extends ModalBase {
                             .setCustomId('nickname')
                             .setStyle(TextInputStyle.Short)
                             .setRequired(true)
-                            .setPlaceholder("Andy")
                     )
             )
             .addTextDisplayComponents(
