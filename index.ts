@@ -7,7 +7,7 @@ import { MongooseManager } from './managers/mongoose';
 class Main {
     public static instance: Main;
     logger: Logger = new Logger("Main");
-    client: Client = new Client({ intents: [GatewayIntentBits.Guilds] });
+    client: Client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers] });
 
     constructor() {
         Main.instance = this;

@@ -17,7 +17,7 @@ export default class ModelCommand extends CommandBase {
         const name = interaction.options.getString("name");
 
         switch (name) {
-            case "verify":
+            case "nickname":
                 if (!interaction.channel?.isSendable()) {
                     await interaction.reply({ content: "Cannot send message in this channel.", flags: MessageFlags.Ephemeral });
                     return;
@@ -26,14 +26,14 @@ export default class ModelCommand extends CommandBase {
                 let actionRow = new ActionRowBuilder()
                     .addComponents(
                         new ButtonBuilder()
-                            .setCustomId("verify")
-                            .setLabel("點此驗證")
+                            .setCustomId("nickname")
+                            .setLabel("點此提交花名")
                             .setStyle(ButtonStyle.Primary)
                     )
                     .toJSON();
 
                 interaction.channel.send({
-                    content: "請點擊下方按鈕以進行驗證。",
+                    content: "請點擊下方按鈕以進行提交花名。",
                     components: [actionRow],
                 });
 
